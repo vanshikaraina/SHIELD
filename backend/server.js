@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes'); // Import auth routes
 const session = require('express-session'); 
 
 const path = require("path");
+//
 
 dotenv.config(); // Load environment variables
 connectDB(); // Connect to MongoDB
