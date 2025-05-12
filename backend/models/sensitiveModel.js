@@ -14,11 +14,11 @@ const SensitiveIssueSchema = new mongoose.Schema({
     required: true,
   },
   location: {
-    type: [Number],  // Array of numbers to store latitude and longitude
+    type: [Number],  
     required: true,
   },
 }, {
-  timestamps: true,  // This will add createdAt and updatedAt fields automatically
+  timestamps: true,
 });
 
 module.exports = mongoose.model('SensitiveIssue', SensitiveIssueSchema);

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // for redirection
 import '../styles/safetyFeedback.css';
 
 const SafetyFeedback = () => {
@@ -8,10 +9,34 @@ const SafetyFeedback = () => {
   const [timeOfDay, setTimeOfDay] = useState('');
   const [issueType, setIssueType] = useState('');
   const [message, setMessage] = useState('');
+  const [lastSubmittedFeedbackId, setLastSubmittedFeedbackId] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const navigate = useNavigate();
+
+  // Helper: Check login status
+  const isUserLoggedIn = () => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  };
+
+  const resetForm = () => {
+    setIsAnonymous(true);
+    setLocation('');
+    setRating('');
+    setTimeOfDay('');
+    setIssueType('');
+    setMessage('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
+    // Check if user is logged in
+    if (!isUserLoggedIn()) {
+      alert('Please log in to submit feedback.');
+      navigate('/login');
+      return;
+    }
+
     const feedbackData = {
       isAnonymous,
       location,
@@ -20,25 +45,55 @@ const SafetyFeedback = () => {
       issueType,
       message,
     };
-  
+
     fetch('http://localhost:5000/api/feedback/submit-feedback', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(feedbackData),
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         alert('Feedback submitted successfully!');
+        setLastSubmittedFeedbackId(data.feedbackId);
+        setShowConfirmation(true);
+        resetForm();
       })
       .catch((error) => {
         console.error('Error:', error);
         alert('Error submitting feedback');
       });
   };
-  
+
+  const handleEdit = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/feedback/get-feedback/${lastSubmittedFeedbackId}`);
+      const feedback = await res.json();
+
+      setIsAnonymous(feedback.isAnonymous);
+      setLocation(feedback.location);
+      setRating(feedback.rating);
+      setTimeOfDay(feedback.timeOfDay);
+      setIssueType(feedback.issueType);
+      setMessage(feedback.message);
+
+      setShowConfirmation(false);
+    } catch (err) {
+      alert('Error fetching feedback: ' + err.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/feedback/delete-feedback/${lastSubmittedFeedbackId}`, {
+        method: 'DELETE',
+      });
+      const result = await res.json();
+      alert(result.message);
+      setShowConfirmation(false);
+    } catch (err) {
+      alert('Error deleting feedback: ' + err.message);
+    }
+  };
 
   return (
     <div className="safety-feedback">
@@ -103,7 +158,6 @@ const SafetyFeedback = () => {
           </select>
         </label>
 
-
         <label>
           Additional Comments:
           <textarea
@@ -115,6 +169,17 @@ const SafetyFeedback = () => {
 
         <button type="submit" className="submit-btn">Submit Feedback</button>
       </form>
+
+      {showConfirmation && (
+        <div className="confirmation-box">
+          <p>Are you satisfied with your feedback submission?</p>
+          <div className="confirmation-actions">
+            <button onClick={handleEdit}>Edit</button>
+            <button onClick={handleDelete}>Delete</button>
+            <button onClick={() => setShowConfirmation(false)}>Dismiss</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
