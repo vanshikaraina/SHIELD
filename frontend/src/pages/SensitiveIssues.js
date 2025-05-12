@@ -40,7 +40,7 @@ const SensitiveIssues = () => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [issueType, setIssueType] = useState('');
   const [description, setDescription] = useState('');
-  const [coords, setCoords] = useState([28.6139, 77.2090]); // Default: Delhi 
+  const [coords, setCoords] = useState([30.5160, 76.6595]); // Default: chitkara uni
   const [policeStations, setPoliceStations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -201,27 +201,27 @@ const SensitiveIssues = () => {
         <div>
           <label>Click on the map to select your location:</label>
           <MapContainer
-            key={coords.join(',')} // <- Fix applied here
-            center={coords}
-            zoom={13}
-            scrollWheelZoom={false}
-            style={{ height: '400px', width: '100%' }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <LocationSelector setCoords={setCoords} />
-            <Marker position={coords} icon={emojiIcon}>
-              <Popup>Your Selected Location</Popup>
-            </Marker>
+  center={coords}
+  zoom={13}
+  scrollWheelZoom={false}
+  style={{ height: '400px', width: '100%' }}
+>
+  <TileLayer
+    attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  />
+  <LocationSelector setCoords={setCoords} />
+  <Marker position={coords} icon={emojiIcon}>
+    <Popup>Your Selected Location</Popup>
+  </Marker>
 
-            {policeStations.length > 0 && !loading && policeStations.map((station, i) => (
-              <Marker key={i} position={[station.lat, station.lon]} icon={policeIcon}>
-                <Popup>{station.name}</Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+  {policeStations.length > 0 && !loading && policeStations.map((station, i) => (
+    <Marker key={i} position={[station.lat, station.lon]} icon={policeIcon}>
+      <Popup>{station.name}</Popup>
+    </Marker>
+  ))}
+</MapContainer>
+
         </div>
 
         {loading && <p>Loading nearby police stations...</p>}

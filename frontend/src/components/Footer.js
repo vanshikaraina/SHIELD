@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-container">
         {/* Left Section - Logo/Brand Name */}
         <div className="footer-logo">
-          <h2>SHIELD</h2>
+          <h2>SafeStreets</h2>
         </div>
 
         {/* Middle Section - About & Contact Us */}
@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="footer-about">
             <h4>About Us</h4>
             <p>
-              At <span className="highlight">SHIELD</span>, we are dedicated to creating a safer and more secure environment for individuals and communities. Our mission is to empower citizens by providing a platform to report issues, share safety feedback, and access emergency resources with ease. Together, we are building a connected community that stands strong in the face of adversity.
+              At <span className="highlight">SafeStreets</span>, we are dedicated to creating a safer and more secure environment for individuals and communities. Our mission is to empower citizens by providing a platform to report issues, share safety feedback, and access emergency resources with ease. Together, we are building a connected community that stands strong in the face of adversity.
             </p>
           </div>
           <div className="footer-contact">

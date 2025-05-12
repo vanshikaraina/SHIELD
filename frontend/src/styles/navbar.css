@@ -1,36 +1,4 @@
-/* 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #232f3e;
-    padding: 10px 20px;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-  }
-  
-  .logo a {
-    font-size: 1.5rem;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-  }
-  
-  .nav-links li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  } */
+
 
   .navbar {
     display: flex;
@@ -86,4 +54,22 @@
     /* background-color: #3a4b5c; */
     border-radius: 4px;
   }
-  
+  /* Login and Logout clean-style buttons */
+.nav-right .login-btn,
+.nav-right .logout-btn {
+  color: white;
+  padding: 6px 14px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1.5px solid white;
+  border-radius: 4px;
+  text-decoration: none;
+  background: transparent;
+  transition: all 0.3s ease;
+  line-height: 1; /* Prevent height shift */
+}
+
+.nav-right .login-btn:hover,
+.nav-right .logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}

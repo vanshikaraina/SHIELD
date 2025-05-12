@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import About from './pages/About';
 import Helpline from './pages/Helpline';
+import CityOfficialDashboard from './components/CityOfficialDashboard';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/about" element={<About />} />
+        <Route path="/dashboard" element={<CityOfficialDashboard />} />
       </Routes>
       <Helpline />
       <Footer /> 
